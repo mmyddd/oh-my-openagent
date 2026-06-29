@@ -29,9 +29,9 @@ export function resolveDaemonVersion(requireFn: (id: string) => unknown = requir
 export function daemonBaseDir(env: NodeJS.ProcessEnv = process.env): string {
 	const explicit = env["CODEX_LSP_DAEMON_DIR"]?.trim();
 	if (explicit) return explicit;
-	const pluginData = env["PLUGIN_DATA"]?.trim();
+	const pluginData = env["PLUGIN_DATA"] ?? env["CLAUDE_PLUGIN_DATA"]?.trim();
 	if (pluginData) return join(pluginData, "daemon");
-	const codexHome = env["CODEX_HOME"]?.trim();
+	const codexHome = env["CODEX_HOME"] ?? env["CLAUDE_PLUGIN_ROOT"]?.trim();
 	const home = codexHome && codexHome.length > 0 ? codexHome : join(homedir(), ".codex");
 	return join(home, "codex-lsp", "daemon");
 }
