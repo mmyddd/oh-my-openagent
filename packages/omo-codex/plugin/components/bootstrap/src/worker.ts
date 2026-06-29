@@ -233,7 +233,7 @@ async function runStep(step: BootstrapWorkerStep, context: BootstrapWorkerContex
 }
 
 function resolvePluginRoot(env: Record<string, string | undefined>): string {
-	const fromEnv = env["PLUGIN_ROOT"]?.trim();
+	const fromEnv = env["CLAUDE_PLUGIN_ROOT"]?.trim();
 	if (fromEnv !== undefined && fromEnv.length > 0) return fromEnv;
 	// dist/cli.js lives at <pluginRoot>/components/bootstrap/dist/cli.js.
 	return resolve(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");

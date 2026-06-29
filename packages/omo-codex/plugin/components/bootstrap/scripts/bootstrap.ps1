@@ -39,8 +39,8 @@ function Write-BootstrapLog {
 
 function Resolve-CodexHome {
 	if (-not [string]::IsNullOrWhiteSpace($env:CODEX_HOME)) { return $env:CODEX_HOME.Trim() }
-	if (-not [string]::IsNullOrWhiteSpace($env:PLUGIN_ROOT)) {
-		$current = $env:PLUGIN_ROOT
+	if (-not [string]::IsNullOrWhiteSpace($env:CLAUDE_PLUGIN_ROOT)) {
+		$current = $env:CLAUDE_PLUGIN_ROOT
 		for ($level = 0; $level -lt 6; $level += 1) {
 			$parent = Split-Path -Path $current -Parent
 			if ([string]::IsNullOrEmpty($parent) -or ($parent -eq $current)) { break }
@@ -52,7 +52,7 @@ function Resolve-CodexHome {
 }
 
 function Get-NodeManifest {
-	$manifestPath = Join-Path $env:PLUGIN_ROOT "components\bootstrap\manifests\node.json"
+	$manifestPath = Join-Path $env:CLAUDE_PLUGIN_ROOT "components\bootstrap\manifests\node.json"
 	if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
 		Write-BootstrapLog ("degraded component=node reason=manifest-missing path=" + $manifestPath + " hint=" + $script:DoctorHint)
 		return $null
@@ -224,7 +224,7 @@ function Initialize-GitBash {
 
 function Invoke-NodeHookDelegate {
 	param([string]$NodeExe)
-	$hookCli = Join-Path $env:PLUGIN_ROOT "components\bootstrap\dist\cli.js"
+	$hookCli = Join-Path $env:CLAUDE_PLUGIN_ROOT "components\bootstrap\dist\cli.js"
 	if (-not (Test-Path -LiteralPath $hookCli -PathType Leaf)) {
 		Write-BootstrapLog ("degraded component=bootstrap reason=hook-cli-missing path=" + $hookCli + " hint=" + $script:DoctorHint)
 		return
@@ -248,7 +248,7 @@ function Write-ProvisioningIncompleteNotice {
 function Invoke-Bootstrap {
 	Initialize-BootstrapLog
 	Write-BootstrapLog "bootstrap.ps1 session-start begin"
-	if ([string]::IsNullOrWhiteSpace($env:PLUGIN_ROOT)) {
+	if ([string]::IsNullOrWhiteSpace($env:CLAUDE_PLUGIN_ROOT)) {
 		Write-BootstrapLog "PLUGIN_ROOT missing; skipping bootstrap"
 		return
 	}

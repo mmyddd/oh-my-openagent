@@ -116,7 +116,7 @@ export function parsePositiveInteger(value, fallback) {
 }
 
 function resolveAutoUpdatePluginRoot(env) {
-	if (env.PLUGIN_ROOT?.trim()) return env.PLUGIN_ROOT.trim();
+	if (env.CLAUDE_PLUGIN_ROOT?.trim()) return env.CLAUDE_PLUGIN_ROOT.trim();
 	return dirname(dirname(fileURLToPath(import.meta.url)));
 }
 
