@@ -136,11 +136,11 @@ export function getMergedServers(): ServerWithSource[] {
 
 function createServerFromEntry(id: string, entry: LspEntry, source: ConfigSource): ServerWithSource | null {
 	const builtin = BUILTIN_SERVERS[id];
-	if (source === "project") {
-		if (!builtin) return null;
-		const server = createServer({
-			id,
-			command: builtin.command,
+		if (source === "project") {
+			if (!builtin) return null;
+			const server = createServer({
+				id,
+				command: entry.command ?? builtin.command,
 			extensions: entry.extensions ?? builtin.extensions,
 			priority: entry.priority ?? 0,
 			source,
